@@ -1,7 +1,29 @@
 # flume-spark-weblog
 Log analysis using Flume, Spark streaming &amp; saving results to S3
 
-EMR Cluster details
+## Objective
+
+To build an application which can monitor user browsing history continously using Spark and save results to S3
+
+## Data description
+
+1. Data is a streaming log data which comprises of login, browsing details of an e-commerce website.
+
+2. Consists information of IP address, categories, browser used, operating system specifications etc
+
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output1.png)
+   
+## Tools & Technologies used
+
+Best suited technologies:
+
+1. Apache Flume
+
+2. Apache Spark
+
+3. Amazon S3
+
+## EMR Cluster details
 
 EMR version: 5.10.0
 
@@ -9,69 +31,64 @@ Cluster name: Bootcamp_Spark2
 
 DNS: ec2-34-219-135-32.us-west-2.compute.amazonaws.com
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
+Key pair: ******.ppk, ******.pem
 
-** Flume installation **
+## Installation steps and commands
+
+### Flume installation
 
 1. Download flume using below command:
 
-wget http://archive.apache.org/dist/flume/1.7.0/apache-flume-1.7.0-bin.tar.gz
+   wget http://archive.apache.org/dist/flume/1.7.0/apache-flume-1.7.0-bin.tar.gz
 
 2. Untar the downloaded file
 
-tar -xzvf apache-flume-1.7.0-bin.tar.gz
+   tar -xzvf apache-flume-1.7.0-bin.tar.gz
 
 3. Move the extracted file to /opt
 
-sudo mv apache-flume-1.7.0-bin /opt
+   sudo mv apache-flume-1.7.0-bin /opt
 
 4. Add Flume to Path in user bash profile file
 
-sudo nano ~/.bash_profile
+   sudo nano ~/.bash_profile
 
-export FLUME_HOME="/opt/apache-flume-1.7.0-bin"
-export PATH=$PATH:$FLUME_HOME/bin
+   export FLUME_HOME="/opt/apache-flume-1.7.0-bin"
+   export PATH=$PATH:$FLUME_HOME/bin
 
-// Use source command to the update the values of environment variables
+   // Use source command to the update the values of environment variables
 
-source ~/.bash_profile
+   source ~/.bash_profile
 
 5. Navigate to flume home directory
 
-cd /opt/apache-flume-1.7.0-bin/
+   cd /opt/apache-flume-1.7.0-bin/
 
 6. Copy sample template flume environment file to "flume-env.sh" file for putting some custom environment configurations
 
-cp conf/flume-env.sh.template conf/flume-env.sh
+   cp conf/flume-env.sh.template conf/flume-env.sh
 
 7. Open flume-env.sh and configure Java variables
 
-sudo nano conf/flume-env.sh
+   sudo nano conf/flume-env.sh
 
-// Uncomment the below statements and add JDK path to JAVA_HOME variable
+   // Uncomment the below statements and add JDK path to JAVA_HOME variable
 
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 
-JAVA_OPTS="-Xms100m -Xmx200m -Dcom.sun.management.jmxremote"
+   JAVA_OPTS="-Xms100m -Xmx200m -Dcom.sun.management.jmxremote"
 
 8. Confirm flume installation using below command:
 
-flume-ng version
+   flume-ng version
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
-
-** Git installation **
+### Git installation
 
 sudo yum install git
 
 git --version
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
-
-** Logs utility installation **
+### Logs utility installation
 
 git clone https://github.com/NavyaSreeKanakala/generating_logs.git
 
@@ -99,60 +116,56 @@ sudo ln -s /opt/gen_logs/tail_logs.sh /usr/bin/tail_logs.sh
 
 // Now one can start logs generating script from any location
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
-
-** SBT installation **
+### SBT installation
 
 1. Download SBT .tgz file from the command below
 
- wget https://piccolo.link/sbt-1.1.5.tgz
+   wget https://piccolo.link/sbt-1.1.5.tgz
  
 2. Extract it using the following command
 
- tar -zxvf sbt-1.1.5.tgz
+   tar -zxvf sbt-1.1.5.tgz
 
 3. Move the extracted folder to local directory
  
- sudo mv sbt /usr/local
+   sudo mv sbt /usr/local
 
 4. Edit the profile file by typing
 
- sudo vi /etc/profile
+   sudo vi /etc/profile
 
 5. Add the following line
  
- export PATH=$PATH:/usr/local/sbt/bin
+   export PATH=$PATH:/usr/local/sbt/bin
 
 6. Exit from VI editor and type the following command to apply changes
  
- source /etc/profile 
+   source /etc/profile 
 
-7. To check whether SBT has been installed successfully, type
+7. Use below command to check whether SBT has been installed successfully or not
  
- sbt about
+   sbt about
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
-
-** Flume and Spark integration **
+## Flume and Spark integration
 
 JARs link: https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume-sink_2.11/2.2.0
            https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume_2.11/2.2.0
-		   http://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar
-		   http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar
+           http://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar
+           http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar
 	
 
-// Terminal 1
+// Open a new terminal and follow below instructions
 
 1. Copy below jars to default flume location
 	
-cp scala-library-2.11.8.jar /opt/apache-flume-1.7.0-bin/lib/
-cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
-cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
-cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 	
+   cp scala-library-2.11.8.jar /opt/apache-flume-1.7.0-bin/lib/
+   cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
+   cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
+   cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 	
 
 2. vi flume.conf
+
+```
 
 # sdc.conf: A multiplex flume configuration
 # Source: log file
@@ -198,23 +211,26 @@ sdc.sources.ws.channels = hdmem sparkmem
 sdc.sinks.hd.channel = hdmem
 sdc.sinks.spark.channel = sparkmem
 
+```
 
 3. Run logs generation script
 
-sudo sh start_logs.sh
+   sudo sh start_logs.sh
 
 4. Run your flume agent
 
-flume-ng agent -n sdc -f flume.conf
+   flume-ng agent -n sdc -f flume.conf
 
 
-// Now open terminal 2 and create a directory structure to build SBT application
+// Now open another new terminal and create a directory structure to build SBT application
 
 1. sudo -i > mkdir retail > cd retail
 
-Place all the 4 jars in /root directory
+   Place all the 4 jars in /root directory
 
 2. vi build.sbt
+
+```
 
 name := "retail"
 version := "1.0"
@@ -227,17 +243,20 @@ libraryDependencies += "org.apache.spark" % "spark-streaming-flume-sink_2.11" % 
 libraryDependencies += "org.scala-lang" % "scala-library" % "2.11.8"
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.5"
 
+```
 press [esc] > :wq
 
 3. mkdir src > cd src > mkdir main > cd main > mkdir scala > cd scala
 
-Q. Count the number of department categories accessed in every 10 secs of time	
+Q1. Count the number of department categories accessed in every 10 secs of time	
 
-Q. Display number of times hosts who made requests to the server in every 10 secs
+Q2. Display number of times hosts who made requests to the server in every 10 secs
 
-Q. Find Total count of different response codes returned by the server per 10 secs
+Q3. Find Total count of different response codes returned by the server per 10 secs
 
 vi FlumeStreamingDepartmentCount.scala
+
+```
 
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{StreamingContext,Seconds}
@@ -266,7 +285,7 @@ object FlumeStreamingDepartmentCount {
       })
     val departmentTraffic = departments.
       reduceByKey((total, value) => total + value)
-    departmentTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/Flume_Spark/departmentcount")
+    departmentTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/new/departmentcount")
 
 	val hostrequests = messages.
       map(rec => {
@@ -277,7 +296,7 @@ object FlumeStreamingDepartmentCount {
     val requestTraffic = hostrequests.
       reduceByKey((total, value) => total + value)
     
-	requestTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/Flume_Spark/num_of_hostrequests")
+	requestTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/new/num_of_hostrequests")
 	
 	
 	val responsecodes = messages.
@@ -289,7 +308,7 @@ object FlumeStreamingDepartmentCount {
 	val responsecodesTraffic = responsecodes.
       reduceByKey((total, value) => total + value)
     
-	responsecodesTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/Flume_Spark/responsecodes_count")
+	responsecodesTraffic.saveAsTextFiles("s3://upx-bd-bootcamp/new/responsecodes_count")
 	
 	
     ssc.start()
@@ -298,6 +317,7 @@ object FlumeStreamingDepartmentCount {
   }
 }
 
+```
 press [esc] > :wq
 
 4. cd .. > cd .. > cd..
@@ -308,16 +328,45 @@ pwd
 
 5. Run below command to package the application
 
-sbt package
+   sbt package
 
 6. Now run below spark submit command after packaging the jar
 
-spark-submit --class FlumeStreamingDepartmentCount --master yarn --jars spark-streaming-flume-sink_2.11-2.2.0.jar,commons-lang3-3.5.jar,scala-library-2.11.8.jar --packages org.apache.spark:spark-streaming-flume_2.11:2.2.0 /home/ec2-user/retail/target/scala-2.11/retail_2.11-1.0.jar yarn-client ip-172-31-19-34 8123
+   spark-submit --class FlumeStreamingDepartmentCount --master yarn --jars spark-streaming-flume-sink_2.11-2.2.0.jar,
+   commons-lang3-3.5.jar,scala-library-2.11.8.jar --packages org.apache.spark:spark-streaming-flume_2.11:2.2.0 
+   /home/ec2-user/retail/target/scala-2.11/retail_2.11-1.0.jar yarn-client ip-172-31-19-34 8123
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
+## Screenshots
 
-** Error **
+1. Output saved to S3
+
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output2.png)
+   
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output3.png)
+
+1. Count the number of department categories accessed in every 10 secs of time	
+
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output4.png)
+   
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output5.png)
+
+2. Display number of times hosts who made requests to the server in every 10 secs
+
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output6.png)
+
+3. Find Total count of different response codes returned by the server per 10 secs
+
+   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output7.png)
+
+## Future Possibilities
+
+As output data is being stored continuously in S3, 
+ 
+  1. We can connect this data to Web UIs like Splunk and generate dashboards
+  
+  2. We can send product recommendations to customers based on their search history
+
+## Most common errors
 
 // Issue 1
 
@@ -336,9 +385,6 @@ cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
 cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
 cp commons-lang3-3.3.2.jar /opt/apache-flume-1.7.0-bin/lib/
 
-----------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------
-
-** References **
+## References
 
 https://spark.apache.org/docs/2.2.0/streaming-flume-integration.html
