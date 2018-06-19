@@ -340,23 +340,23 @@ pwd
 
 1. Output saved to S3
 
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output2.png)
+   ![alt text](images/output2.png)
    
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output3.png)
+   ![alt text](images/output3.png)
 
 1. Count the number of department categories accessed in every 10 secs of time	
 
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output4.png)
+   ![alt text](images/output4.png)
    
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output5.png)
+   ![alt text](images/output5.png)
 
 2. Display number of times hosts who made requests to the server in every 10 secs
 
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output6.png)
+   ![alt text](images/output6.png)
 
 3. Find Total count of different response codes returned by the server per 10 secs
 
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output7.png)
+   ![alt text](images/output7.png)
 
 ## Future Possibilities
 
