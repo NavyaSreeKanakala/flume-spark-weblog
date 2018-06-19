@@ -11,7 +11,7 @@ To build an application which can monitor user browsing history continously usin
 
 2. Consists information of IP address, categories, browser used, operating system specifications etc
 
-   ![alt text](https://github.com/NavyaSreeKanakala/flume-spark-weblog/blob/master/output1.png)
+   ![alt text](images/output1.png)
    
 ## Tools & Technologies used
 
