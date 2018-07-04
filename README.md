@@ -163,20 +163,19 @@ http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-lang3/
 
 1. Copy below jars to default flume location
 
-   ```
-   cp scala-library-2.11.8.jar /opt/apache-flume-1.7.0-bin/lib/
+```
+cp scala-library-2.11.8.jar /opt/apache-flume-1.7.0-bin/lib/
    
-   cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
+cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
    
-   cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
+cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
    
-   cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 
-   ```
+cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 
+```
 
 2. vi flume.conf
 
 ```
-
 # sdc.conf: A multiplex flume configuration
 # Source: log file
 # Sink 1: Unprocessed data to HDFS
@@ -220,7 +219,6 @@ sdc.channels.sparkmem.transactionCapacity = 200
 sdc.sources.ws.channels = hdmem sparkmem
 sdc.sinks.hd.channel = hdmem
 sdc.sinks.spark.channel = sparkmem
-
 ```
 
 3. Run logs generation script
