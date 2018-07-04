@@ -148,20 +148,30 @@ sudo ln -s /opt/gen_logs/tail_logs.sh /usr/bin/tail_logs.sh
 
 ## Flume and Spark integration
 
-JARs link: https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume-sink_2.11/2.2.0
-           https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume_2.11/2.2.0
-           http://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar
-           http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar
+JARs link: 
+
+https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume-sink_2.11/2.2.0
+           
+https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-flume_2.11/2.2.0
+           
+http://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.11.8/scala-library-2.11.8.jar
+           
+http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar
 	
 
 // Open a new terminal and follow below instructions
 
 1. Copy below jars to default flume location
-	
+
+   ```
    cp scala-library-2.11.8.jar /opt/apache-flume-1.7.0-bin/lib/
+   
    cp spark-streaming-flume_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/
+   
    cp spark-streaming-flume-sink_2.11-2.2.0.jar /opt/apache-flume-1.7.0-bin/lib/	
-   cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 	
+   
+   cp commons-lang3-3.5.jar /opt/apache-flume-1.7.0-bin/lib/ 
+   ```
 
 2. vi flume.conf
 
